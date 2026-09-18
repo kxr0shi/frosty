@@ -305,6 +305,15 @@ class ChatSettings extends StatelessWidget {
             onChanged: (newValue) =>
                 settingsStore.landscapeForceVerticalChat = newValue,
           ),
+          SettingsListSwitch(
+            title: 'Hide chat input bar in landscape',
+            subtitle: const Text(
+              'Removes the chat input and emote bar while using horizontal landscape mode.',
+            ),
+            value: settingsStore.landscapeHideChatBottomBar,
+            onChanged: (newValue) =>
+                settingsStore.landscapeHideChatBottomBar = newValue,
+          ),
           SettingsListSelect(
             title: 'Notch fill',
             subtitle:

@@ -71,6 +71,8 @@ SettingsStore _$SettingsStoreFromJson(
         json['landscapeCutout'],
       ) ??
       LandscapeCutoutType.none
+  ..landscapeHideChatBottomBar =
+      json['landscapeHideChatBottomBar'] as bool? ?? false
   ..chatWidth = (json['chatWidth'] as num?)?.toDouble() ?? 0.2
   ..fullScreenChatOverlayOpacity =
       (json['fullScreenChatOverlayOpacity'] as num?)?.toDouble() ?? 0.5
@@ -136,6 +138,7 @@ Map<String, dynamic> _$SettingsStoreToJson(
   'landscapeChatLeftSide': instance.landscapeChatLeftSide,
   'landscapeForceVerticalChat': instance.landscapeForceVerticalChat,
   'landscapeCutout': _$LandscapeCutoutTypeEnumMap[instance.landscapeCutout]!,
+  'landscapeHideChatBottomBar': instance.landscapeHideChatBottomBar,
   'chatWidth': instance.chatWidth,
   'fullScreenChatOverlayOpacity': instance.fullScreenChatOverlayOpacity,
   'keepScreenAwake': instance.keepScreenAwake,

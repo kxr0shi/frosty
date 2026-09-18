@@ -496,7 +496,17 @@ abstract class ChatStoreBase with Store {
     _messages.add(IRCMessage.createNotice(message: 'Connecting to chat...'));
 
     if (settings.showRecentMessages) {
-      getRecentMessage().then((_) => connectToChat());
+      getRecentMessage()
+          .then((_) => connectToChat())
+          .catchError((Object error, StackTrace stackTrace) {
+            // A recent-messages failure must not leave chat stuck on
+            // "Connecting to chat...".
+            debugPrint(
+              'ChatStore[$channelName]: recent messages failed; connecting anyway: '
+              '$error\\n$stackTrace',
+            );
+            connectToChat();
+          });
     } else {
       connectToChat();
     }
@@ -1557,10 +1567,23 @@ abstract class ChatStoreBase with Store {
       );
 
       for (final message in recentMessages) {
-        _handleIRCData(message);
+        try {
+          _handleIRCData(message);
+        } catch (error, stackTrace) {
+          // One malformed historical message must not discard the rest of
+          // the batch or prevent the live chat connection.
+          debugPrint(
+            'ChatStore[$channelName]: failed to handle recent message: '
+            '$error\\n$stackTrace\\nmessage: $message',
+          );
+        }
       }
-    } catch (e) {
-      debugPrint('Failed to fetch recent messages: $e');
+    } catch (e, stackTrace) {
+      debugPrint(
+        'ChatStore[$channelName]: recent messages request failed: '
+        '$e\\n$stackTrace',
+      );
+      rethrow;
     }
   }
 

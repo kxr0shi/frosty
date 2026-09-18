@@ -37,6 +37,26 @@ mixin _$NativeVideoStore on NativeVideoStoreBase, Store {
     });
   }
 
+  late final _$_isAdBreakActiveAtom = Atom(
+    name: 'NativeVideoStoreBase._isAdBreakActive',
+    context: context,
+  );
+
+  bool get isAdBreakActive {
+    _$_isAdBreakActiveAtom.reportRead();
+    return super._isAdBreakActive;
+  }
+
+  @override
+  bool get _isAdBreakActive => isAdBreakActive;
+
+  @override
+  set _isAdBreakActive(bool value) {
+    _$_isAdBreakActiveAtom.reportWrite(value, super._isAdBreakActive, () {
+      super._isAdBreakActive = value;
+    });
+  }
+
   late final _$_loadingAtom = Atom(
     name: 'NativeVideoStoreBase._loading',
     context: context,
