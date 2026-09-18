@@ -1084,8 +1084,19 @@ class IRCMessage {
 
         // Extract the word associated with this emoteId by using the provided indices.
         final indexSplit = range.split('-');
-        final startIndex = int.parse(indexSplit[0]);
-        final endIndex = int.parse(indexSplit[1]);
+        // Recent-message history can contain malformed emote ranges. Ignore
+        // those entries instead of aborting parsing of the whole message.
+        if (indexSplit.length < 2) continue;
+
+        final startIndex = int.tryParse(indexSplit[0]);
+        final endIndex = int.tryParse(indexSplit[1]);
+        if (startIndex == null ||
+            endIndex == null ||
+            startIndex < 0 ||
+            startIndex > endIndex ||
+            endIndex >= message.length) {
+          continue;
+        }
 
         final emoteWord = message.substring(startIndex, endIndex + 1);
 
