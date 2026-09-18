@@ -42,6 +42,10 @@ class Chat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
+        final hideBottomBar =
+            context.isLandscape &&
+            !chatStore.settings.landscapeForceVerticalChat &&
+            chatStore.settings.landscapeHideChatBottomBar;
         return Column(
           children: [
             Expanded(
@@ -146,11 +150,12 @@ class Chat extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: ChatBottomBar(
+                  if (!hideBottomBar)
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: ChatBottomBar(
                       chatStore: chatStore,
                       onAddChat: onAddChat,
                       channelDisplayName: _isMerged
@@ -302,12 +307,20 @@ class Chat extends StatelessWidget {
     return AnimatedContainer(
       curve: Curves.ease,
       duration: const Duration(milliseconds: 200),
-      height: chatStore.assetsStore.showEmoteMenu ? menuHeight : 0,
+      height: chatStore.assetsStore.showEmoteMenu &&
+              !(context.isLandscape &&
+                !chatStore.settings.landscapeForceVerticalChat &&
+                chatStore.settings.landscapeHideChatBottomBar)
+          ? menuHeight
+          : 0,
       child: AnimatedSwitcher(
         duration: const Duration(milliseconds: 100),
         switchInCurve: Curves.easeOut,
         switchOutCurve: Curves.easeIn,
-        child: chatStore.assetsStore.showEmoteMenu
+        child: chatStore.assetsStore.showEmoteMenu &&
+                !(context.isLandscape &&
+                  !chatStore.settings.landscapeForceVerticalChat &&
+                  chatStore.settings.landscapeHideChatBottomBar)
             ? ClipRect(
                 // Lay the content out at its full target height regardless of
                 // the animated container's current height, then clip — the
