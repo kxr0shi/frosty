@@ -111,6 +111,7 @@ abstract class NativeVideoStoreBase
   /// twitch-stitched-ad dateranges). Latency readings and play/buffer
   /// transitions are unreliable during ads, so recovery and chat sync are
   /// suspended rather than burning refresh attempts on ad-induced noise.
+  @readonly
   var _isAdBreakActive = false;
 
   @readonly
