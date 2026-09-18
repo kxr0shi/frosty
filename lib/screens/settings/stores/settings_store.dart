@@ -166,6 +166,7 @@ abstract class _SettingsStoreBase with Store {
   static const defaultLandscapeChatLeftSide = false;
   static const defaultLandscapeForceVerticalChat = false;
   static const defaultLandscapeCutout = LandscapeCutoutType.none;
+  static const defaultLandscapeHideChatBottomBar = false;
   static const defaultChatWidth = 0.2;
   static const defaultFullScreenChatOverlayOpacity = 0.5;
 
@@ -284,6 +285,10 @@ abstract class _SettingsStoreBase with Store {
   @observable
   var landscapeCutout = defaultLandscapeCutout;
 
+  @JsonKey(defaultValue: defaultLandscapeHideChatBottomBar)
+  @observable
+  var landscapeHideChatBottomBar = defaultLandscapeHideChatBottomBar;
+
   @JsonKey(defaultValue: defaultChatWidth)
   @observable
   var chatWidth = defaultChatWidth;
@@ -361,6 +366,7 @@ abstract class _SettingsStoreBase with Store {
     landscapeChatLeftSide = defaultLandscapeChatLeftSide;
     landscapeForceVerticalChat = defaultLandscapeForceVerticalChat;
     landscapeCutout = defaultLandscapeCutout;
+    landscapeHideChatBottomBar = defaultLandscapeHideChatBottomBar;
     chatWidth = defaultChatWidth;
     fullScreenChatOverlayOpacity = defaultFullScreenChatOverlayOpacity;
 
