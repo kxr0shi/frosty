@@ -71,6 +71,51 @@ class NativeVideo extends StatelessWidget {
                     size: 32,
                   ),
                 ),
+              if (nativeVideoStore.isAdBreakActive && !isOffline)
+                const IgnorePointer(
+                  child: SafeArea(
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 8),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: Color(0x8C000000),
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SizedBox(
+                                  width: 14,
+                                  height: 14,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: Colors.white70,
+                                  ),
+                                ),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Ad blocking…',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               if (nativeVideoStore.isAudioOnlyMode && !isOffline)
                 const ColoredBox(
                   color: Colors.black,
